@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/twpayne/go-polyline"
 )
 
 var coords [][]float64
@@ -13,7 +15,7 @@ var parts []float64
 
 func main() {
 	readFile()
-	printSlice(coords)
+	fmt.Println(string(polyline.EncodeCoords(coords)))
 }
 
 func readFile() {
@@ -33,16 +35,12 @@ func readFile() {
 
 func extractCoords(line string, i int) {
 	index := strings.Index(line, "Location arrived")
+	//line position 59 is the "Location arrived" word
 	if index == 59 {
 		sl1 := strings.Split(line, "<")
 		sl2 := strings.Split(sl1[1], ">")
-		//fmt.Println("Coordenada #", i, " : ", sl2[0])
 		sl3 := strings.Split(sl2[0], ",")
 		storeCoords(sl3[0], sl3[1])
-
-		//fmt.Println("Lat", sl3[0])
-		//fmt.Println("Lon", sl3[1])
-		//fmt.Println("Linea #", i, " : ", line)
 		i++
 	}
 }
@@ -55,8 +53,4 @@ func storeCoords(left string, right string) {
 	parts = append(parts, val2)
 	coords = append(coords, [][]float64{parts}...)
 	parts = nil
-}
-
-func printSlice(s [][]float64) {
-	fmt.Printf("len=%d cap=%d %v\n", len(s), cap(s), s)
 }
