@@ -35,7 +35,7 @@ func readFile() {
 
 func extractCoords(line string, i int) {
 	index := strings.Index(line, "Location arrived")
-	//line position 59 is the "Location arrived" word
+	//line position 59 is where the word "Location arrived" is found, on that line are the coordinates
 	if index == 59 {
 		sl1 := strings.Split(line, "<")
 		sl2 := strings.Split(sl1[1], ">")
